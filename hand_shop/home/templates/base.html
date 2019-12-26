@@ -33,9 +33,8 @@
         </button>
 
         <div class="collapse navbar-collapse mr-4" id="navbarSupportedContent">
-
-          {% if request.user.is_authenticated %}
-              <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto">
+                {% if request.user.is_authenticated %}
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
@@ -45,16 +44,8 @@
                 <li class="nav-item mainy">
                   <a class="nav-link" href="{% url 'logout' %}">logout <span class="sr-only">(current)</span></a>
                 </li>
-                <form method="get" class="form-inline my-2 my-lg-0 ml-4" action="{% url 'search' %}">
-                  {% csrf_token %}
-                  <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q" value="{{request.GET.q}}">
-                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-              </ul>
+                {% else %}
 
-            {% else %}
-
-            <ul class="navbar-nav ml-auto">
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
               </li>
@@ -64,14 +55,13 @@
               <li class="nav-item mainy">
                 <a class="nav-link" href="{% url 'login' %}">Sign In <span class="sr-only">(current)</span></a>
               </li>
-              <form method="get" class="form-inline my-2 my-lg-0 ml-4">
-                {% csrf_token %}
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q" value="{{request.GET.q}}">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form>
-            </ul>
-
             {% endif %}
+            <form method="get" class="form-inline my-2 my-lg-0 ml-4">
+              {% csrf_token %}
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q" value="{{request.GET.q}}">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </ul>
         </div>
       </nav>
 
