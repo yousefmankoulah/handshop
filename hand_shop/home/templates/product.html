@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="container">
+
+
+    <img class="image" src="{% static 'img/banner.jpg' %}" alt="">
+    <h1 class="text-center heh">Our Product</h1><br><br>
+
+
+    <div class="row mx-auto">
+        {% for product in product %}
+            <div class="my_button col-md-6 col-sm-12 mt-4 mb-4">
+                <div class="card text-center">
+                    <img class="card-img-top my-image" src="{{product.image.url}}" alt="{{product.name}}">
+                    <div class="card-body">
+                        <h4>{{product.name}}</h4>
+                        <p class="lead">Description: {{product.description}}</p>
+                        <p class="lead">Price: $ {{product.price}}</p>
+                        <a class="btn btn-primary" href="{% url 'detail' product.id %}">More Details</a>
+                        {% if product.stock <= 0 %}
+                            <p class="text-justify my-text"><b>Out of Stock</b></p>
+                        {% else %}
+                            <a class="btn btn-primary" href="{% url 'cart:add_cart' product.id %}">Add to Cart</a>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div>
+    <p class="text-center my-search">You have searched for: <b>"{{query}}"</b></p>
+</div>
+<div class="container">
+       <div class="row mx-auto">
+         <div class="col-12">
+
+         {% for post in posts %}
+
+         <article class="media content-section">
+             <div class="media-body">
+
+             <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+             <p class="lead">Price: ${{post.price}}</p>
+             <p class="lead">I need {{post.title}} from {{post.country}}</p>
+
+             <p class="article-content lead">Description: {{ post.description }}</p>
+             <small class="text-muted">{{ post.created|date:"F d, Y" }}</small><br>
+             {% if request.user == post.customer %}
+             <a href="{% url 'cart:add_cart' post.id %}" class="btn btn-primary mt-4 mb-2">Pay Now</a>
+             {% endif %}
+             {% if not request.user == post.customer %}
+             <a href="mailto:{{user.email}}" class="btn btn-primary mt-4 mb-2">Send Request</a>
+             {% endif %}
+             </div>
+
+         </article>
+
+               {% empty %}
+           <div class="row mx-auto">
+               <p class="text-center my-search">0 results found.</p>
+           </div>
+
+           {% endfor %}
+
+</div>
+       </div>
+
+   </div>
+
+{% endblock %}
